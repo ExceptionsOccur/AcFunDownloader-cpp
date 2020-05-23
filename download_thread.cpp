@@ -108,22 +108,22 @@ void download_thread::set_data(ts_info info){
 //    memcpy(&video_ts_info, &info, sizeof(info));
     video_ts_info.search_flag = info.search_flag;
     if(info.up.size())
-        video_ts_info.up.assign(qstr_to_str(QString::fromStdString(info.up)));
+        video_ts_info.up.assign(info.up);
 
     if(info.title.size())
-        video_ts_info.title.assign(qstr_to_str(QString::fromStdString(info.title)));
+        video_ts_info.title.assign(info.title);
 
     if(info.url.size())
-        video_ts_info.url.assign(qstr_to_str(QString::fromStdString(info.url)));
+        video_ts_info.url.assign(info.url);
 
     if(info.ts_url_prefix.size())
-        video_ts_info.ts_url_prefix.assign(qstr_to_str(QString::fromStdString(info.ts_url_prefix)));
+        video_ts_info.ts_url_prefix.assign(info.ts_url_prefix);
 
     if(info.duration.size())
-        video_ts_info.duration.assign(qstr_to_str(QString::fromStdString(info.duration)));
+        video_ts_info.duration.assign(info.duration);
 
     if(info.upload_time.size())
-        video_ts_info.upload_time.assign(qstr_to_str(QString::fromStdString(info.upload_time)));
+        video_ts_info.upload_time.assign(info.upload_time);
 
     if(info.ts_url.size())
         video_ts_info.ts_url.assign(info.ts_url.begin(), info.ts_url.end());
