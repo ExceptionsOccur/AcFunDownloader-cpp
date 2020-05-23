@@ -122,51 +122,51 @@ CURLcode get(std::string url, std::string& response) {
 
 
 // get title, up, upload time, duration, ts_url, pre_ts_url
-//bool video_search(ts_info& video_info){
-//    std::string response("");
-//    std::string json_string = "";
-//    nlohmann::json json;
-//    if(CURLE_OK == get(video_info.url, response)){
-//        size_t index_start = response.find("window.videoInfo = ");
-//        size_t index_end = response.find("window.videoResource");
-//        if (index_start != std::string::npos && index_end != std::string::npos){
-//            index_start += 19;
-//            index_end -= 11;
-//            if(index_end > index_start){
-//                json_string = response.substr(index_start, index_end - index_start + 1);
-//            }
-//            else
-//                return false;
-//            json = nlohmann::json::parse(json_string);
-//            video_info.title = json["title"];
-//            modifies_illegal_title(video_info.title);
-//            video_info.up = json["user"]["name"];
-//            long long time_(json["videoList"][0]["uploadTime"]);
-//            std::time_t time(time_ / 1000);
-//            char upload_time[25];
-//            std::strftime(upload_time, 25, "%Y-%m-%d %H:%M:%S", localtime(&time));
-//            video_info. upload_time = upload_time;
-//            int duration_millis = json["videoList"][0]["durationMillis"];
-//            int min = duration_millis / 60000, sec = duration_millis / 1000 % 60;
-//            char duration[10];
-//            sprintf(duration, "%.2d:%.2d", min, sec);
-//            video_info.duration = duration;
+bool video_search(ts_info& video_info){
+    std::string response("");
+    std::string json_string = "";
+    nlohmann::json json;
+    if(CURLE_OK == get(video_info.url, response)){
+        size_t index_start = response.find("window.videoInfo = ");
+        size_t index_end = response.find("window.videoResource");
+        if (index_start != std::string::npos && index_end != std::string::npos){
+            index_start += 19;
+            index_end -= 11;
+            if(index_end > index_start){
+                json_string = response.substr(index_start, index_end - index_start + 1);
+            }
+            else
+                return false;
+            json = nlohmann::json::parse(json_string);
+            video_info.title = json["title"];
+            modifies_illegal_title(video_info.title);
+            video_info.up = json["user"]["name"];
+            long long time_(json["videoList"][0]["uploadTime"]);
+            std::time_t time(time_ / 1000);
+            char upload_time[25];
+            std::strftime(upload_time, 25, "%Y-%m-%d %H:%M:%S", localtime(&time));
+            video_info. upload_time = upload_time;
+            int duration_millis = json["videoList"][0]["durationMillis"];
+            int min = duration_millis / 60000, sec = duration_millis / 1000 % 60;
+            char duration[10];
+            sprintf(duration, "%.2d:%.2d", min, sec);
+            video_info.duration = duration;
 
 
-//            std::string ksplay_info = json["currentVideoInfo"]["ksPlayJson"].get<std::string>();
-//            nlohmann::json ksplay_json = nlohmann::json::parse(ksplay_info);
-//            std::string m3u8_file_url = ksplay_json["adaptationSet"]["representation"][0]["url"];
-//            std::regex r_pre_url("https(.*?)segment/");
-//            re_search(m3u8_file_url, r_pre_url, video_info.ts_url_prefix);
-//            std::string ts_file("");
-//            if(CURLE_OK == get(m3u8_file_url, ts_file)){
-//                get_ts_url(ts_file, video_info.ts_url);
-//            }
-//            return true;
-//        }
-//    }
-//    return false;
-//}
+            std::string ksplay_info = json["currentVideoInfo"]["ksPlayJson"].get<std::string>();
+            nlohmann::json ksplay_json = nlohmann::json::parse(ksplay_info);
+            std::string m3u8_file_url = ksplay_json["adaptationSet"]["representation"][0]["url"];
+            std::regex r_pre_url("https(.*?)segment/");
+            re_search(m3u8_file_url, r_pre_url, video_info.ts_url_prefix);
+            std::string ts_file("");
+            if(CURLE_OK == get(m3u8_file_url, ts_file)){
+                get_ts_url(ts_file, video_info.ts_url);
+            }
+            return true;
+        }
+    }
+    return false;
+}
 
 
 ts_info video_search(std::string url){

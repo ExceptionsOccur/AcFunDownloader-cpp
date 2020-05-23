@@ -26,7 +26,7 @@ std::string get_ac(std::string s);
 CURLcode get(std::string url, std::string& response);
 
 // get title, up, upload time, duration, ts_url, pre_ts_url
-//bool video_search(ts_info& video_info);
+bool video_search(ts_info& video_info);
 
 ts_info video_search(std::string url);
 
