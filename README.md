@@ -7,3 +7,4 @@ AcFunDownloader python版本的镜像项目，使用c++与qt5编写，网络库�
 
 ### TO DO：
 ~~暂时没时间管了~~   
+~~文件名会乱码~~
