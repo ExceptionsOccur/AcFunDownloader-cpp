@@ -156,7 +156,7 @@ bool video_search(ts_info& video_info){
             std::string ksplay_info = json["currentVideoInfo"]["ksPlayJson"].get<std::string>();
             nlohmann::json ksplay_json = nlohmann::json::parse(ksplay_info);
             std::string m3u8_file_url = ksplay_json["adaptationSet"]["representation"][0]["url"];
-            std::regex r_pre_url("https(.*?)segment/");
+            std::regex r_pre_url("https(.*?)hls/");
             re_search(m3u8_file_url, r_pre_url, video_info.ts_url_prefix);
             std::string ts_file("");
             if(CURLE_OK == get(m3u8_file_url, ts_file)){
@@ -204,7 +204,7 @@ ts_info video_search(std::string url){
             std::string ksplay_info = json["currentVideoInfo"]["ksPlayJson"].get<std::string>();
             nlohmann::json ksplay_json = nlohmann::json::parse(ksplay_info);
             std::string m3u8_file_url = ksplay_json["adaptationSet"]["representation"][0]["url"];
-            std::regex r_pre_url("https(.*?)segment/");
+            std::regex r_pre_url("https(.*?)hls/");
             re_search(m3u8_file_url, r_pre_url, video_info.ts_url_prefix);
             std::string ts_file("");
             if(CURLE_OK == get(m3u8_file_url, ts_file)){

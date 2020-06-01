@@ -46,4 +46,4 @@ else:win32:CONFIG(debug, debug|release): LIBS += -LF:/AcFunDownloader-cpp/libcur
 else:unix: LIBS += -LF:/AcFunDownloader-cpp/libcurl/lib/ -llibcurl
 
 INCLUDEPATH += F:/AcFunDownloader-cpp/libcurl/include
-DEPENDPATH += F:/AcFunDownloader-cpp/libcurl/include
+DEPENDPATH += F:/AcFunDownloader-cpp/libcurl/lib
