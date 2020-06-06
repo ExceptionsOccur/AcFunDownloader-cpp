@@ -119,6 +119,7 @@ void AcFunDownloader::on_cancel_btn_clicked(){
     d_thread.set_stop_flag(true);
     if(d_thread.get_pause_flag()){
         d_thread.start();
+
     }
 }
 

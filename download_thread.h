@@ -29,6 +29,7 @@ protected:
 signals:
     void update_data(ts_info);
     void progress_bar(int);
+    void file_exists_flag(bool);
 private:
     ts_info video_ts_info;
     QString path;

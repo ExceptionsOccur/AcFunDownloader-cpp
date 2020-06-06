@@ -35,6 +35,11 @@ void download_thread::run(){
             return;
         }
 
+        if(file_exists(path, video_ts_info.title)){
+            emit file_exists_flag(true);
+            return;
+        }
+
         std::fstream out(name.c_str(), std::fstream::binary | std::fstream::app | std::fstream::out);
 
         if(out.is_open()){

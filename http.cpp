@@ -13,7 +13,7 @@
 QString limit_path_len(QString path){
    int len = path.length();
    if(len > 20){
-       int i = len - 22;
+       int i = len - 14 + 1;
        QString temp;
        temp = path.mid(0, 3);
        temp[3] = '.';
@@ -44,8 +44,9 @@ void modifies_illegal_title(std::string& s){
 bool file_exists(QString path, std::string title){
     if(path.back() != '/')
         path = path + "/";
-    std::string file_name = qstr_to_str(path) + title + ".mp4";
-    std::fstream in(file_name.c_str(), std::fstream::in);
+    std::string file_name = path.toStdString() + title + ".mp4";
+    std::string name = qstr_to_str(QString::fromStdString(file_name));
+    std::fstream in(name.c_str(), std::fstream::in);
     if(in.is_open()){
         in.close();
         return true;

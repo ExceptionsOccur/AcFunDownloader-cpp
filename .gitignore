@@ -34,3 +34,4 @@
 
 libcurl/
 *.user
+*pro.user.*
