@@ -3,6 +3,7 @@
 #define ACFUNDOWNLOADER_H
 
 #include <QMainWindow>
+#include <QPoint>
 #include <regex>
 #include "ts_info.h"
 #include <download_thread.h>
@@ -22,6 +23,9 @@ public:
     void pop_information(std::string);
     void set_propertis();
     void update_ui();
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 
 private slots:
 
@@ -58,5 +62,7 @@ private:
     std::string last_video;
     bool pause_flag;
     bool file_exists_flag;
+    bool mouse_flag;
+    QPoint win_pos;
 };
 #endif // ACFUNDOWNLOADER_H

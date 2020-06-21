@@ -10,6 +10,8 @@
 #include "http.h"
 #include <QMetaType>
 #include <QTextCodec>
+#include <QMouseEvent>
+#include <QPoint>
 
 AcFunDownloader::AcFunDownloader(QWidget *parent)
     : QMainWindow(parent)
@@ -18,6 +20,7 @@ AcFunDownloader::AcFunDownloader(QWidget *parent)
     ,d_thread(new download_thread)
     ,pause_flag(false)
     ,file_exists_flag(false)
+    ,mouse_flag(false)
 {
     qRegisterMetaType<ts_info>("ts_info");
     qRegisterMetaType<std::string>("std::string");
@@ -91,6 +94,27 @@ void AcFunDownloader::set_data(ts_info info){
     video_ts_info.search_flag = true;
     last_video = video_ts_info.url;
     update_ui();
+}
+
+void AcFunDownloader::mousePressEvent(QMouseEvent *event){
+    if(event->button() == Qt::LeftButton){
+        mouse_flag = true;
+        win_pos = event->globalPos() - this->pos();
+        event->accept();
+        this->setCursor(QCursor(Qt::OpenHandCursor));
+    }
+}
+
+void AcFunDownloader::mouseMoveEvent(QMouseEvent *event){
+    if(Qt::LeftButton && mouse_flag){
+        this->move(event->globalPos() - win_pos);
+        event->accept();
+    }
+}
+
+void AcFunDownloader::mouseReleaseEvent(QMouseEvent *event){
+    mouse_flag = false;
+    this->setCursor(QCursor(Qt::ArrowCursor));
 }
 
 void AcFunDownloader::process_s_thread_error(std::string s){
