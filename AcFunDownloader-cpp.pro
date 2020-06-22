@@ -41,9 +41,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     src.qrc
 
-win32:CONFIG(release, debug|release): LIBS += -LF:/AcFunDownloader-cpp/libcurl/lib/ -llibcurl
-else:win32:CONFIG(debug, debug|release): LIBS += -LF:/AcFunDownloader-cpp/libcurl/lib/ -llibcurld
-else:unix: LIBS += -LF:/AcFunDownloader-cpp/libcurl/lib/ -llibcurl
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/libcurl/lib/ -llibcurl
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/libcurl/lib/ -llibcurld
+else:unix: LIBS += -L$$PWD/libcurl/lib/ -llibcurl
 
-INCLUDEPATH += F:/AcFunDownloader-cpp/libcurl/include
-DEPENDPATH += F:/AcFunDownloader-cpp/libcurl/lib
+INCLUDEPATH += $$PWD/libcurl/include
+DEPENDPATH += $$PWD/libcurl/lib
