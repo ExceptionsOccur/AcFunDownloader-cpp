@@ -40,16 +40,16 @@ AcFunDownloader::AcFunDownloader(QWidget *parent)
 AcFunDownloader::~AcFunDownloader()
 {
     delete ui;
-//    delete &s_thread;  // É¾µôµÚ¶ş´Î³ÌĞò¾ÍÖ´ĞĞ²»ÆğÀ´£¬×¢²á±í»á±»¸Ä±ä
+//    delete &s_thread;  // åˆ æ‰ç¬¬äºŒæ¬¡ç¨‹åºå°±æ‰§è¡Œä¸èµ·æ¥ï¼Œæ³¨å†Œè¡¨ä¼šè¢«æ”¹å˜
 }
 
 void AcFunDownloader::pop_information(std::string s){
-    QMessageBox::information(this, QString::fromLocal8Bit("ºÃÏñÄÄÀï²»¶Ô"), str_to_qstr(s));
+    QMessageBox::information(this, QString::fromStdString("å¥½åƒå“ªé‡Œä¸å¯¹"), str_to_qstr(s));
 }
 
 void AcFunDownloader::d_file_is_exists(bool flag){
     if(flag == true)
-        pop_information("ÎÄ¼şÒÑ´æÔÚ");
+        pop_information("æ–‡ä»¶å·²å­˜åœ¨");
 }
 
 void AcFunDownloader::s_file_is_exists(bool flag){
@@ -73,10 +73,10 @@ void AcFunDownloader::set_propertis(){
     ui->table_widget->rowHeight(30);
     ui->table_widget->setColumnWidth(0, 60);
     ui->table_widget->setColumnWidth(1, 338);
-    ui->table_widget->setItem(0, 0, new QTableWidgetItem(QString::fromLocal8Bit("±êÌâ")));
-    ui->table_widget->setItem(1, 0, new QTableWidgetItem(QString::fromLocal8Bit("upÖ÷")));
-    ui->table_widget->setItem(2, 0, new QTableWidgetItem(QString::fromLocal8Bit("ÉÏ´«Ê±¼ä")));
-    ui->table_widget->setItem(3, 0, new QTableWidgetItem(QString::fromLocal8Bit("Ê±³¤")));
+    ui->table_widget->setItem(0, 0, new QTableWidgetItem(QString::fromStdString("æ ‡é¢˜")));
+    ui->table_widget->setItem(1, 0, new QTableWidgetItem(QString::fromStdString("upä¸»")));
+    ui->table_widget->setItem(2, 0, new QTableWidgetItem(QString::fromStdString("ä¸Šä¼ æ—¶é—´")));
+    ui->table_widget->setItem(3, 0, new QTableWidgetItem(QString::fromStdString("æ—¶é•¿")));
     for (int row = 0; row < 4; row ++) {
         ui->table_widget->item(row, 0)->setTextAlignment(Qt::AlignCenter);
     }
@@ -127,7 +127,7 @@ void AcFunDownloader::update_progress_bar(int i){
 
 void AcFunDownloader::on_fold_btn_clicked()
 {
-    QString get_dir = QFileDialog::getExistingDirectory(this, "Ñ¡Ôñ±£´æÎÄ¼ş¼Ğ", path);
+    QString get_dir = QFileDialog::getExistingDirectory(this, "é€‰æ‹©ä¿å­˜æ–‡ä»¶å¤¹", path);
     path = get_dir;
     if(get_dir.length()){
         ui->fold_btn->setText(limit_path_len(get_dir));
@@ -136,10 +136,10 @@ void AcFunDownloader::on_fold_btn_clicked()
 
 void AcFunDownloader::on_cancel_btn_clicked(){
     if(d_thread.get_downloading_flag() == false){
-        pop_information("µ±Ç°Ã»ÓĞÏÂÔØÈÎÎñ");
+        pop_information("å½“å‰æ²¡æœ‰ä¸‹è½½ä»»åŠ¡");
         return;
     }
-    ui->pause_btn->setText(str_to_qstr("ÔİÍ£"));
+    ui->pause_btn->setText(str_to_qstr("æš‚åœ"));
     d_thread.set_stop_flag(true);
     if(d_thread.get_pause_flag()){
         d_thread.start();
@@ -149,17 +149,17 @@ void AcFunDownloader::on_cancel_btn_clicked(){
 
 void AcFunDownloader::on_pause_btn_clicked(){
     if(d_thread.get_downloading_flag() == false){
-        pop_information("µ±Ç°Ã»ÓĞÏÂÔØÈÎÎñ");
+        pop_information("å½“å‰æ²¡æœ‰ä¸‹è½½ä»»åŠ¡");
         return;
     }
-    if(d_thread.get_pause_flag()){ // ¼ÌĞø
-        ui->pause_btn->setText(str_to_qstr("ÔİÍ£"));
+    if(d_thread.get_pause_flag()){ // ç»§ç»­
+        ui->pause_btn->setText(str_to_qstr("æš‚åœ"));
         pause_flag = false;
         d_thread.set_pause_flag(false);
         d_thread.start();
     }
-    else{   // ÔİÍ£
-        ui->pause_btn->setText(str_to_qstr("¼ÌĞø"));
+    else{   // æš‚åœ
+        ui->pause_btn->setText(str_to_qstr("ç»§ç»­"));
         pause_flag = true;
         d_thread.set_pause_flag(true);
     }
@@ -178,18 +178,18 @@ void AcFunDownloader::on_search_btn_clicked(){
     bool flag(s_thread.get_search_flag());
     std::string ac_num = get_ac(input_text);
     if(d_thread.get_downloading_flag()){
-        pop_information("µ±Ç°ÕıÔÚÏÂÔØ");
+        pop_information("å½“å‰æ­£åœ¨ä¸‹è½½");
         return;
     }
     if(ac_num == "url error"){
-        pop_information("ÊäÈë²»ºÏ·¨");
+        pop_information("è¾“å…¥ä¸åˆæ³•");
         return;
     }
     if(flag){
-        pop_information("ÓëÉÏÒ»´ÎÊäÈëÏàÍ¬");
+        pop_information("ä¸ä¸Šä¸€æ¬¡è¾“å…¥ç›¸åŒ");
         return;
     }
-    memset(&video_ts_info, 0, sizeof (video_ts_info));     // ÔÙ´Î½øÈëvideo_ts_info»á±ä³ÉÎ´³õÊ¼»¯×´Ì¬£¬¸³Öµ»áÔì³É¶Î´íÎó(¹íÖªµÀÔõÃ´»ØÊÂ!)
+    memset(&video_ts_info, 0, sizeof (video_ts_info));     // å†æ¬¡è¿›å…¥video_ts_infoä¼šå˜æˆæœªåˆå§‹åŒ–çŠ¶æ€ï¼Œèµ‹å€¼ä¼šé€ æˆæ®µé”™è¯¯(é¬¼çŸ¥é“æ€ä¹ˆå›äº‹!)
     video_ts_info.url = "https://www.acfun.cn/v/ac" + ac_num;
     s_thread.set_url(video_ts_info.url);
     s_thread.set_search_flag(flag);
@@ -201,18 +201,18 @@ void AcFunDownloader::on_download_btn_clicked(){
     std::string ac_num = get_ac(input_text);
 
     if(d_thread.get_downloading_flag()){
-        pop_information("µ±Ç°ÕıÔÚÏÂÔØ");
+        pop_information("å½“å‰æ­£åœ¨ä¸‹è½½");
         return;
     }
     if(ac_num == "url error"){
-        pop_information("ÊäÈë²»ºÏ·¨");
+        pop_information("è¾“å…¥ä¸åˆæ³•");
         return;
     }
     if(file_exists(path, d_thread.get_title())){
-        pop_information("ÎÄ¼şÒÑ´æÔÚ");
+        pop_information("æ–‡ä»¶å·²å­˜åœ¨");
         return;
     }
-    memset(&video_ts_info, 0, sizeof (video_ts_info));  // ÔÙ´Î½øÈëvideo_ts_info»á±ä³ÉÎ´³õÊ¼»¯×´Ì¬£¬¸³Öµ»áÔì³É¶Î´íÎó(¹íÖªµÀÔõÃ´»ØÊÂ!)
+    memset(&video_ts_info, 0, sizeof (video_ts_info));  // å†æ¬¡è¿›å…¥video_ts_infoä¼šå˜æˆæœªåˆå§‹åŒ–çŠ¶æ€ï¼Œèµ‹å€¼ä¼šé€ æˆæ®µé”™è¯¯(é¬¼çŸ¥é“æ€ä¹ˆå›äº‹!)
     video_ts_info.url.assign("https://www.acfun.cn/v/ac" + ac_num);
     d_thread.set_data(video_ts_info);
     d_thread.set_search_flag(s_thread.get_search_flag());

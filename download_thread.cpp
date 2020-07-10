@@ -22,7 +22,7 @@ void download_thread::run(){
         file_name = path.toStdString() + "/" + file_name;
 
     if(video_ts_info.ts_url.size() != 0){
-    // fstream Ê¹ÓÃÎÄ¼şÃû²ÎÊıÖµ¾ÍÊÇ´ò²»¿ª£¡ÏÔÊ½Öµ¿ÉÒÔ(ÂÒÂëÎÊÌâ!!!ÎÒÈÕ£¡)
+    // fstream ä½¿ç”¨æ–‡ä»¶åå‚æ•°å€¼å°±æ˜¯æ‰“ä¸å¼€ï¼æ˜¾å¼å€¼å¯ä»¥(ä¹±ç é—®é¢˜!!!æˆ‘æ—¥ï¼)
         std::string name = qstr_to_str(QString::fromStdString(file_name));
 
         if(stop_flag && downloading_flag){

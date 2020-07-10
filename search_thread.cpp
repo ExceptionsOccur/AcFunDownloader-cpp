@@ -5,7 +5,7 @@
 void search_thread::run(){
     ts_info video_ts_info;
     if(url.size() == 0){
-        emit search_error("链接无效");
+        emit search_error("閾炬帴鏃犳晥");
         return;
     }
 //    if(video_search(video_ts_info)){
@@ -27,7 +27,7 @@ void search_thread::run(){
         return;
     }
     search_flag = false;
-    emit search_error("获取视频信息失败");
+    emit search_error("鑾峰彇瑙嗛淇℃伅澶辫触");
 }
 
 void search_thread::set_path(QString p){

@@ -27,7 +27,7 @@ QString limit_path_len(QString path){
 
 QString str_to_qstr(const std::string str)
 {
-    return QString::fromLocal8Bit(str.data());
+    return QString::fromStdString(str.data());
 }
 
 std::string qstr_to_str(const QString qstr)
@@ -100,14 +100,14 @@ size_t get_call_back(void* ptr, size_t size, size_t nmemb, void* stream) {
 }
 
 
-// QString ÓĞ¿Ó£¬·µ»ØµÄ¶«Î÷È±½ïÉÙÁ½£¬±£´æµ½ÎÄ¼ş»¹»áÂÒÂë£¡
+// QString æœ‰å‘ï¼Œè¿”å›çš„ä¸œè¥¿ç¼ºæ–¤å°‘ä¸¤ï¼Œä¿å­˜åˆ°æ–‡ä»¶è¿˜ä¼šä¹±ç ï¼
 CURLcode get(std::string url, std::string& response) {
     response.clear();
     curl_global_init(CURL_GLOBAL_ALL);
     CURLcode res_code = CURLE_OK;
     CURL* curl = nullptr;
     curl = curl_easy_init();
-    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());  // const char* ÀàĞÍºÜÖØÒª£¡£¡£¡stringÓĞÎÊÌâ£¡
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());  // const char* ç±»å‹å¾ˆé‡è¦ï¼ï¼ï¼stringæœ‰é—®é¢˜ï¼
     curl_easy_setopt(curl, CURLOPT_TIMEOUT, 20);
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0);
     curl_easy_setopt(curl, CURLOPT_HEADER, 0);

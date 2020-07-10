@@ -36,9 +36,9 @@ private:
 
     bool pause_flag;
     bool stop_flag;
-    // ÏÂÔØ×´Ì¬±êÖ¾
+    // ä¸‹è½½çŠ¶æ€æ ‡å¿—
     bool downloading_flag;
-    // ÔİÍ£Ê±±£´æÊı¾İ
+    // æš‚åœæ—¶ä¿å­˜æ•°æ®
     int pause_point;
 };
 
