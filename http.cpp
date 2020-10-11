@@ -9,6 +9,7 @@
 #include <ts_info.h>
 #include <fstream>
 
+//#define MY_DEBUG
 
 QString limit_path_len(QString path){
    int len = path.length();
@@ -27,7 +28,7 @@ QString limit_path_len(QString path){
 
 QString str_to_qstr(const std::string str)
 {
-    return QString::fromStdString(str.data());
+    return QString::fromLocal8Bit(str.data());
 }
 
 std::string qstr_to_str(const QString qstr)
@@ -116,8 +117,16 @@ CURLcode get(std::string url, std::string& response) {
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, reinterpret_cast<void*>(&response));
     curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
     res_code = curl_easy_perform(curl);
+
     curl_easy_cleanup(curl);
     curl_global_cleanup();
+#ifdef MY_DEBUG
+    std::string temp("");
+    temp = response;
+    std::fstream out("response.txt", std::fstream::out);
+    out.write(temp.c_str(), temp.size());
+    out.close();
+#endif
     return res_code;
 }
 
@@ -138,6 +147,15 @@ bool video_search(ts_info& video_info){
             }
             else
                 return false;
+
+#ifdef MY_DEBUG
+            std::string temp("");
+            temp = json_string;
+            std::fstream out_1("json_string.txt", std::fstream::out);
+            out_1.write(temp.c_str(), temp.size());
+            out_1.close();
+#endif
+
             json = nlohmann::json::parse(json_string);
             video_info.title = json["title"];
             modifies_illegal_title(video_info.title);
@@ -155,8 +173,16 @@ bool video_search(ts_info& video_info){
 
 
             std::string ksplay_info = json["currentVideoInfo"]["ksPlayJson"].get<std::string>();
+
+#ifdef MY_DEBUG
+            temp = ksplay_info;
+            std::fstream out_2("ksplay_info.txt", std::fstream::out);
+            out_2.write(temp.c_str(), temp.size());
+            out_2.close();
+#endif
+
             nlohmann::json ksplay_json = nlohmann::json::parse(ksplay_info);
-            std::string m3u8_file_url = ksplay_json["adaptationSet"]["representation"][0]["url"];
+            std::string m3u8_file_url = ksplay_json["adaptationSet"][0]["representation"][0]["url"];
             std::regex r_pre_url("https(.*?)hls/");
             re_search(m3u8_file_url, r_pre_url, video_info.ts_url_prefix);
             std::string ts_file("");
@@ -186,6 +212,15 @@ ts_info video_search(std::string url){
             }
             else
                 return video_info;
+
+#ifdef MY_DEBUG
+            std::string temp("");
+            temp = json_string;
+            std::fstream out_1("json_string.txt", std::fstream::out);
+            out_1.write(temp.c_str(), temp.size());
+            out_1.close();
+#endif
+
             json = nlohmann::json::parse(json_string);
             video_info.title = json["title"];
             modifies_illegal_title(video_info.title);
@@ -194,7 +229,7 @@ ts_info video_search(std::string url){
             std::time_t time(time_ / 1000);
             char upload_time[25];
             std::strftime(upload_time, 25, "%Y-%m-%d %H:%M:%S", localtime(&time));
-            video_info. upload_time = upload_time;
+            video_info.upload_time = upload_time;
             int duration_millis = json["videoList"][0]["durationMillis"];
             int min = duration_millis / 60000, sec = duration_millis / 1000 % 60;
             char duration[10];
@@ -203,8 +238,16 @@ ts_info video_search(std::string url){
 
 
             std::string ksplay_info = json["currentVideoInfo"]["ksPlayJson"].get<std::string>();
+
+#ifdef MY_DEBUG
+            temp = ksplay_info;
+            std::fstream out_2("ksplay_info.txt", std::fstream::out);
+            out_2.write(temp.c_str(), temp.size());
+            out_2.close();
+#endif
+
             nlohmann::json ksplay_json = nlohmann::json::parse(ksplay_info);
-            std::string m3u8_file_url = ksplay_json["adaptationSet"]["representation"][0]["url"];
+            std::string m3u8_file_url = ksplay_json["adaptationSet"][0]["representation"][0]["url"];
             std::regex r_pre_url("https(.*?)hls/");
             re_search(m3u8_file_url, r_pre_url, video_info.ts_url_prefix);
             std::string ts_file("");
